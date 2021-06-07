@@ -27,8 +27,7 @@ const shit = [
   "Clerasiltestgelände",
   "Pimmelotter",
   "Popelnascher",
-  "Schwingtitte",
-  "Analdelfin"
+  "Schwingtitte"
 ];
 
 client.once("ready", () => {
@@ -62,15 +61,15 @@ client.on("message", async (msg) => {
   const wav = `./resources/beleidigungen/${victim}/${shit}.wav`;
   const dispatcher = voiceConnection.play(wav);
   dispatcher.setVolume("2");
-  dispatcher.on("error", err => console.log(err))
+  dispatcher.on("error", err => console.log(err));
 });
 
 async function saveWAV(victim) {
   if (fs.existsSync(`./resources/beleidigungen/${victim}/`)) {
     return;
   } else {
-    fs.mkdir(`./resources/beleidigungen/${victim}/`, null, (err, path) => console.log(err + "at " + path));
-    shit.forEach(shit =>
+    fs.mkdirSync(`./resources/beleidigungen/${victim}/`);
+    shit.forEach((shit) =>
       say.export(
         `${victim}, du ${shit}`,
         null,
@@ -81,7 +80,8 @@ async function saveWAV(victim) {
             console.error(err);
           }
         }
-      ))
+      )
+    );
   }
 }
 
